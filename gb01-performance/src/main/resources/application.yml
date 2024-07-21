@@ -13,7 +13,7 @@ spring:
       test-while-idle: true
 
 server:
-  port: 8081
+  port: 7080
   tomcat:
     accept-count: 100
     max-threads: 200
@@ -28,5 +28,5 @@ management:
       exposure:
         include: prometheus,metrics  # 开启的端点
   server:
-    port: 8081  # 可重置管理端口
+    port: 8083  # 可重置管理端口
 
