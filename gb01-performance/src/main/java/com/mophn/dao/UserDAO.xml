@@ -6,4 +6,30 @@
     <select id="getDataList" resultType="java.util.Map">
         select * from test_ylz
     </select>
+
+    <resultMap id="rm" type="com.mophn.entity.UserEntity">
+        <result property="name" column="name"/>
+        <collection property="address" ofType="com.mophn.entity.Address">
+            <result column="aaa" property="addr"/>
+            <result column="bbb" property="name"/>
+            <result column="ccc" property="dat"/>
+        </collection>
+    </resultMap>
+
+    <select id="getDataList2" resultMap="rm">
+        select a.name, b.name as bbb, b.addr as aaa, b.dat as ccc
+        from test_user a
+        inner join test_addr b on a.name=b.name
+
+    </select>
+
+    <update id="updateUser">
+
+     update test_user set age=#{age} where name='ylz'
+    </update>
+
+    <update id="updatePro">
+
+        update test_ylz set prov=#{prov} where id='001'
+    </update>
 </mapper>

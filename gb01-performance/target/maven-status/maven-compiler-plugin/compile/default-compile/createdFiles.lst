@@ -1,7 +1,0 @@
-com/mophn/WebApplication.class
-com/mophn/common/ResultType.class
-com/mophn/service/UserService.class
-com/mophn/controller/WebController.class
-com/mophn/config/DataSourceConfig.class
-com/mophn/dao/UserDAO.class
-com/mophn/common/ResultVO.class
