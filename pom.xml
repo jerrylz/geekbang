@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>gb01-performance</module>
+        <module>gb05-netty</module>
     </modules>
 
     <properties>
@@ -47,6 +48,7 @@
         </dependencies>
 
     </dependencyManagement>
+
     <build>
         <resources>
             <resource>
