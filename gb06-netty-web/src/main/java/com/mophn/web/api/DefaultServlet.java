@@ -25,13 +25,13 @@ public class DefaultServlet extends HeroServlet{
                 response.write("404 - no found: " + uri);
                 return;
             }
-            String content = FileUtil.readString(resource, StandardCharsets.UTF_8);
 
+            byte[] bytes = FileUtil.readBytes(resource.getFile());
             HttpHeroResponse heroResponse = (HttpHeroResponse)response;
             Map<CharSequence, CharSequence> headerMap = new HashMap<>();
             headerMap.put(HttpHeaderNames.CONTENT_TYPE, getContentType(uri.substring(uri.lastIndexOf(".")+1)));
             heroResponse.setHeaderMap(headerMap);
-            heroResponse.write(content);
+            heroResponse.write(bytes);
 
         } else {
             if (uri.indexOf("?") > 0) {

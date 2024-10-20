@@ -1,12 +1,11 @@
 package com.mophn.web.response;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ArrayUtil;
 import com.mophn.web.api.HeroResponse;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
-import lombok.Setter;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -29,15 +28,21 @@ public class HttpHeroResponse implements HeroResponse {
 
     @Override
     public void write(String content) throws Exception {
-        if (StrUtil.isBlank(content)) {
+        write(content.getBytes(StandardCharsets.UTF_8));
+    }
+    public void write(byte[] content) throws Exception {
+        if (ArrayUtil.isEmpty(content)) {
             return;
         }
 
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
                 HttpResponseStatus.OK,
-                Unpooled.wrappedBuffer(content.getBytes(StandardCharsets.UTF_8)));
+                Unpooled.wrappedBuffer(content));
+        setHeaders(response);
+        ctx.writeAndFlush(response);
+    }
 
-
+    private void setHeaders(FullHttpResponse response) {
         HttpHeaders headers = response.headers();
         headers.set(HttpHeaderNames.CONTENT_TYPE, "text/json");
         headers.set(HttpHeaderNames.CONTENT_LENGTH, String.valueOf(response.content().readableBytes()));
@@ -49,10 +54,7 @@ public class HttpHeroResponse implements HeroResponse {
         if (CollectionUtil.isNotEmpty(headerMap)) {
             headerMap.forEach(headers::set);
         }
-
-
-        ctx.writeAndFlush(response);
-
     }
+
 
 }
